@@ -1,0 +1,254 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+    
+
+    <style>
+      td.thermometer {
+        vertical-align: bottom!important;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      h3 {
+        text-transform: uppercase;
+      }
+    </style>
+
+    <script>
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+
+      function unitRound(num) {
+        return Math.round(2 * num) / 2.0;
+      }
+
+      function setCorrectionDose() {
+        var bg = parseInt($('#bg').val());
+        var correction = 0;
+        if(bg >= 200) {
+          correction = unitRound((bg - 150) / 100.0);
+        } 
+
+        $('#bg-insulin').val(correction);
+      }
+
+      function setCarbDose() {
+        var carbs = parseInt($('#carbs').val());
+        var i2c = parseInt($('#meal-correction').val());
+        var insulin = unitRound(carbs / i2c);
+
+        $('#carbs-insulin').val(insulin);
+      }
+
+      $(function() {
+        $('#carbs').keyup(function() { setCarbDose(); });
+        $('#bg').keyup(function() { setCorrectionDose(); });
+        $('#meal-correction').change(function() { setCarbDose(); });
+      });
+
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" style="text-align: center;">
+        <h1>Maya Diabetes Card <a href="/">[back]</a></h1>
+      </div>
+      <div class="row">
+        <div class="col-md-6" style="border: 1px solid black; border-radius: 25px;">
+          <h2>BG Action Chart</h2>
+          <table class="table table-hover">
+            <tr>
+              <td class="thermometer" style="background-color: red">$ \geq 300 $</td>
+              <td>
+                <ul>
+                  <li>Correct once possible with correction dose (not more than every 3 hours)</li>
+                  <li>Drink fluids! (no carbs)</li>
+                  <li>Check ketones - <b>do not exercise if present</b></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 100px; background-color: yellow">200</td>
+              <td>
+                <ul>
+                  <li>If not about to eat, encourage exercise and fluids</li>
+                  <li>Correct before meal, formula = $ BG - 150 \over 100 $</li>
+                  <li>Do not correct in this range after dinner</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 80px; background-color: green">120</td>
+              <td>
+                <ul>
+                  <li>Yay! Do nothing!</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 20px; background-color: green">100</td>
+              <td>
+                <ul>
+                  <li>Give 5-10g carbs before exercise</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 20px; background-color: green">80</td>
+              <td>
+                <ul>
+                  <li>Don't go to bed under 100</li>
+                  <li>Give 10-15g carbs before exercise</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 20px; background-color: yellow">60</td>
+              <td>
+                <ul>
+                  <li>Rule of 15: 5-10g carbs</li>
+                  <li>If it's at meal time, eat/drink fast carbs <b>first</b>, and don't use those carbs for post-meal insulin calculation</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 20px; background-color: yellow">50</td>
+              <td>
+                <ul>
+                  <li>Rule of 15: 15g carbs</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 20px; background-color: red">40</td>
+              <td>
+                <ul>
+                  <li>If she can swallow, give liquid fast carbs (honey, cake icing, liquid glucose gel, juice)</li>
+                  <li>If she can't swallow or is unconscious, do as below</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="thermometer" style="height: 40px; background-color: red">$ \leq 30 $</td>
+              <td>
+                <ul>
+                  <li>If she's conscious, give liquid fast carbs and recheck</li>
+                  <li>If she's unconscious, <b>call 911</b></li>
+                  <li>Give glucagon (you cannot overdo it), turn on side and expect nausea when she wakes up</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <h3>Maya</h3>
+            <ul>
+              <li>This is a cheat sheet for Maya's care only. I don't know anything about other people or how they care for themselves.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>BG Check</h3>
+            <ul>
+              <li>No good/bad numbers - just "high" or "low" or in-range</li>
+              <li>Wash hands with warm water before</li>
+              <li>Test at least before every meal and at bed time</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>bg correction insulin dose</h3>
+            <ul>
+              <li>Only when BG &gt;= 200</li>
+              <li>Do not correct at bedtime</li>
+              <li> $ BG - 150 \over 100 $ rounded to half</li>
+              <li><b>Only correct 3 hours after last insulin dose</b></li>
+            </ul>
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="bg">Blood Sugar</label>
+                <input type="number" class="form-control" id="bg" placeholder="Blood Sugar"/>
+              </div>
+              <div class="form-group">
+                <label for="bg-insulin">Insulin Units</label>
+                <input type="number" class="form-control" id="bg-insulin" placeholder="0" readonly/>
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <h3>Carb Insulin Dose</h3>
+            <div>
+              <form class="form-inline">
+                <div class="form-group">
+                  <label for="meal">Meal</label>
+                  <select class="form-control" id="meal-correction" name="meal-correction">
+                    <option value="22">Breakfast</option>
+                    <option value="25">Lunch</option>
+                    <option value="30">Afternoon Snack</option>
+                    <option value="30">Dinner</option>
+                    <option value="30">After-Dinner snack</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="carbs">Carbs Eaten</label>
+                  <input type="number" class="form-control" id="carbs" placeholder="Carbs"/>
+                </div>
+                <div class="form-group">
+                  <label for="carbs-insulin">Insulin Units</label>
+                  <input type="number" class="form-control" id="carbs-insulin" placeholder="0" readonly/>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="clearfix">
+            <h3>Injections</h3>
+            <ul>
+              <li>Wash hands</li>
+              <li>Wipe injection site and vial top with alcohol swab</li>
+              <li>Pinch arm/leg/butt, inject at 90&deg;, release pinch, count to 5, pull needle out</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Mixing Insulins</h3>
+            <ol>
+              <li>Draw air into insulin</li>
+              <li>Inject air into slower insulin (Levemir) - do NOT draw insulin yet</li>
+              <li>Inject air into faster insulin (Humalog)</li>
+              <li>Draw dose of Humalog</li>
+              <li>Draw dose of Levemir (do NOT inject back into vial)</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3>Checking for ketones</h3>
+            <ul>
+              <li>Check when: BG &gt; 300 twice in a row, BG &gt; 450 once, vomitting (even once) or diarrhea</li>
+              <li>Run ketostix pad through urine stream, wait 15 seconds, compare to bottle</li>
+              <li>If small or trace, give water and rest, continue checking with each trip to the bathroom</li>
+              <li>If medium or large, give water and rest and call doctor</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Rule of 15</h3>
+            <ul>
+              <li>Give x carbs, wait 15 minutes, check BG again</li>
+              <li>Typically it's 15 carbs, except for small people (hi Maya), that will almost always result in a high BG</li>
+            </ul>
+          </div>
+
+        </div> <!-- col -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </body>
+</html>
