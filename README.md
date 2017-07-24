@@ -188,7 +188,10 @@ To learn more about the Nightscout API, visit https://YOUR-SITE.com/api-docs.htm
 
   These alarm setting effect all delivery methods (browser, pushover, maker, etc), some settings can be overridden per client (web browser)
 
-  * `ALARM_TYPES` (`simple` if any `BG_`* ENV's are set, otherwise `predict`) - currently 2 alarm types are supported, and can be used independently or combined.  The `simple` alarm type only compares the current BG to `BG_` thresholds above, the `predict` alarm type uses highly tuned formula that forecasts where the BG is going based on it's trend.  `predict` **DOES NOT** currently use any of the `BG_`* ENV's
+  * `ALARM_TYPES` (`simple` if any `BG_`* ENV's are set, otherwise `predict`) - currently 2 alarm types are supported, and can be used independently or combined.  
+  The `simple` alarm type only compares the current BG to `BG_` thresholds above, the `predict` alarm type uses highly tuned formula that forecasts where the 
+  BG is going based on it's trend.  `predict` **DOES NOT** currently use any of the `BG_`* ENV's
+
   * `BG_HIGH` (`260`) - must be set using mg/dl units; the high BG outside the target range that is considered urgent
   * `BG_TARGET_TOP` (`180`) - must be set using mg/dl units; the top of the target range, also used to draw the line on the chart
   * `BG_TARGET_BOTTOM` (`80`) - must be set using mg/dl units; the bottom of the target range, also used to draw the line on the chart
