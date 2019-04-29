@@ -56,6 +56,7 @@ function setSSL() {
     }
   }
 
+  // blarg
   env.insecureUseHttp = readENVTruthy("INSECURE_USE_HTTP", false);
   env.secureHstsHeader = readENVTruthy("SECURE_HSTS_HEADER", true);
   env.secureHstsHeaderIncludeSubdomains = readENVTruthy("SECURE_HSTS_HEADER_INCLUDESUBDOMAINS", false);
